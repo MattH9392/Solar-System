@@ -1,9 +1,7 @@
 public class Moon extends SolarObject {
-    Planet planet;
 
-    public Moon(SolarSystem solarSystem, Planet planet, double distance, double angle, double diameter, String colour) {
-        super(solarSystem, distance, angle, diameter, colour);
-        planet.addMoon();
-        System.out.println("Added plannet. Total planets: " + planet.getMoonCount());
+    public Moon(SolarSystem solarSystem, Planet planet, double distance, double angle, double diameter, double orbitalPeriod, String colour) {
+        super(solarSystem, distance, angle, diameter, orbitalPeriod, colour);
+        System.out.println("Added Moon. Total moons: " + (planet.getMoonCount() + 1));
     }
 }
