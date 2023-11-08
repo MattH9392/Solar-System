@@ -1,4 +1,5 @@
 public class SolarObject {
+    protected double originalDistance;
     protected SolarSystem solarSystem;
     protected double distance;
     protected double angle;
@@ -13,6 +14,7 @@ public class SolarObject {
         this.diameter = diameter;
         this.orbitalPeriod = orbitalPeriod;
         this.colour = colour;
+        originalDistance = distance;
     }
 
     public SolarSystem getSolarSystem() {
@@ -21,6 +23,10 @@ public class SolarObject {
 
     public double getDistance() {
         return distance;
+    }
+
+    public double getOriginalDistance() {
+        return originalDistance;
     }
 
     public double getAngle() {
@@ -47,7 +53,7 @@ public class SolarObject {
         this.angle = angle;
         if(angle >= 360)
             this.angle -= 360;
-        else if(angle <= 0)
+        else if(angle < 0)
             this.angle += 360; // keeps angle within range of double - obviously very unlikely to exceed range as it would take a long time, but at least it's physically possible
     }
 

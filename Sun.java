@@ -1,8 +1,10 @@
-public class Sun extends SolarObject{
+public class Sun extends SolarObject {
     private static int numSuns = 0;
     private int numPlanets = 0;
+    private int numComets = 0;
     private static Sun[] suns = new Sun[0];
     private Planet[] planets = new Planet[0];
+    private Comet[] comets = new Comet[0];
 
     public Sun(SolarSystem solarSystem, double distance, double angle, double diameter) {
         super(solarSystem, distance, angle, diameter, 0, "YELLOW");
@@ -14,6 +16,14 @@ public class Sun extends SolarObject{
 
     public Planet[] getPlanets() {
         return planets;
+    }
+
+    public Comet[] getComets() {
+        return comets;
+    }
+
+    public int getCometCount() {
+        return numComets;
     }
 
     public int getPlanetCount() {
@@ -29,7 +39,7 @@ public class Sun extends SolarObject{
     }
 
 
-    public Planet[] addPlanet(Planet planet) {
+    public void addPlanet(Planet planet) {
         Planet newPlanets[] = new Planet[planets.length + 1];
         for(int i = 0; i < planets.length; i++)
             newPlanets[i] = planets[i];
@@ -37,10 +47,19 @@ public class Sun extends SolarObject{
         planets[planets.length - 1] = planet;
         numPlanets++;
         System.out.println("Added planet. array length = " + planets.length);
-        return planets;
     }
 
-    static Sun[] addSun(Sun sun) {
+    public void addComet(Comet comet) {
+        Comet newComets[] = new Comet[comets.length + 1];
+        for(int i = 0; i < comets.length; i++)
+            newComets[i] = comets[i];
+        comets = newComets;
+        comets[comets.length - 1] = comet;
+        numComets++;
+        System.out.println("Added comet. array length = " + comets.length);
+    }
+
+    public static void addSun(Sun sun) {
         Sun newSuns[] = new Sun[suns.length + 1];
         for(int i = 0; i < suns.length; i++)
             newSuns[i] = suns[i];
@@ -48,6 +67,5 @@ public class Sun extends SolarObject{
         suns[suns.length - 1] = sun;
         numSuns++;
         System.out.println("Added sun. array length = " + suns.length);
-        return suns;
     }
 }

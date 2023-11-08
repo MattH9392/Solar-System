@@ -7,36 +7,52 @@ public class Driver {
         Sun.addSun(sun);
 
         // Orbital periods: Earth is 1
-        Planet mercury = new Planet(solar_system, sun, 50, 180, 7, 4.1477, "DARK_GRAY");
+        Planet mercury = new Planet(solar_system, sun, 50, 0, 7, 4.1477, "DARK_GRAY");
         sun.addPlanet(mercury);
 
-
-        Planet venus = new Planet(solar_system, sun, 100, 180, 18, 1.6244, "ORANGE");
+        Planet venus = new Planet(solar_system, sun, 80, 30, 18, 1.6244, "ORANGE");
         sun.addPlanet(venus);
 
-        Planet earth = new Planet(solar_system, sun, 150, 180, 20, 1, "BLUE");
+        Planet earth = new Planet(solar_system, sun, 120, 60, 20, 1, "BLUE");
         sun.addPlanet(earth);
 
-        Moon moon = new Moon(solar_system, earth, 30, 180, 5, 13.5185, "GRAY");
+        Moon moon = new Moon(solar_system, earth, 30, 90, 5, 13.5185, "GRAY");
         earth.addMoon(moon);
 
-        Planet mars = new Planet(solar_system, sun, 200, 180, 10, 0.5313, "RED");
+        Planet mars = new Planet(solar_system, sun, 160, 120, 10, 0.5313, "RED");
         sun.addPlanet(mars);
 
-        Planet jupiter = new Planet(solar_system, sun, 300, 180, 50, 0.0843, "MAGENTA");
+        Planet jupiter = new Planet(solar_system, sun, 220, 90, 50, 0.0843, "MAGENTA");
         sun.addPlanet(jupiter);
 
-        
+        Planet saturn = new Planet(solar_system, sun, 280, 180, 40, 0.04, "#ceb8b8");
+        sun.addPlanet(saturn);
+
+        // asteroids are modelled as planets for convenience
+        Planet[] asteroids = new Planet[100];
+        for(int i = 0; i < 50; i++) {
+            asteroids[i] = new Planet(solar_system, sun, 175+(i%20), (i/100.0)*359.0, 2+(i%4), 0.3+(0.02*(i%4)), "#987654");
+            sun.addPlanet(asteroids[i]);
+        }
+        for(int i = 50; i < 100; i++) {
+            asteroids[i] = new Planet(solar_system, sun, 175+(i%13), (i/100.0)*359.0, 2+(i%5), 0.3+(0.02*(i%5)), "#987654");
+            sun.addPlanet(asteroids[i]);
+        }
+
+        Planet uranus = new Planet(solar_system, sun, 320, 310, 30, 0.02, "#afdbf5");
+        sun.addPlanet(uranus);
+
+        Planet neptune = new Planet(solar_system, sun, 360, 260, 29, 0.01, "BLUE");
+        sun.addPlanet(neptune);
+
+        Planet pluto = new Planet(solar_system, sun, 380, 100, 4, 0.005, "LIGHT_GRAY");
+        sun.addPlanet(pluto);
+
+        Comet comet1 = new Comet(solar_system, sun, 180, 0, 10, 5, 0.5, "WHITE");
+        sun.addComet(comet1);
 
         
-        
-            
-        
-
         while(true) {
-            // solar_system.drawSolarObject(0, 0, 36, "YELLOW");
-
-            
             for (Sun s : Sun.getSuns()) {
                 for (Planet p : s.getPlanets()) {
                     for(Moon m : p.getMoons()) {
@@ -44,38 +60,18 @@ public class Driver {
                         m.setAngle(m.getAngle() + 5);
                     }
                     solar_system.drawSolarObjectAbout(p.getDistance(), p.getAngle(), p.getDiameter(), p.getColour(), s.getDistance(), s.getAngle());
-                    // solar_system.drawSolarObject(p.getDistance(), p.getAngle(), p.getDiameter(), p.getColour());
                     p.setAngle(p.getAngle() - p.getOrbitalPeriod());
                 }
                 solar_system.drawSolarObject(s.getDistance(), s.getAngle(), s.getDiameter(), s.getColour());
+                for(Comet c : s.getComets()) {
+                    solar_system.drawSolarObjectAbout(c.getDistance(), c.getAngle(), c.getDiameter(), c.getColour(), s.getDistance(), s.getAngle());
+                    c.setAngle(c.getAngle() - c.getOrbitalPeriod());
+                    // Calculate new distance
+                    double r = c.getOriginalDistance() * (1 - c.getEccentricity() * c.getEccentricity()) / (1 + c.getEccentricity() * Math.cos(c.getAngle() * Math.PI / 180));
+                    c.setDistance(r);
+                }
             }
-
-
-
-
-
-            // try{
-            //     Thread.sleep(50);
-            // } catch(InterruptedException e) {
-            //     System.out.println("Sleep not possible");
-            // }
-            
             solar_system.finishedDrawing();
         }
-    
     }
-
-    // // Increase size of planets array by 1 and add a new planet
-    // static Planet[] addPlanet(Planet[] planets, Planet planet) {
-    //     Planet newPlanets[] = new Planet[planets.length + 1];
-    //     for(int i = 0; i < planets.length; i++)
-    //         newPlanets[i] = planets[i];
-    //     planets = newPlanets;
-    //     planets[planets.length - 1] = planet;
-    //     System.out.println("Added planet. array length = " + planets.length);
-    //     return planets;
-    // }
-
-    
-
 }

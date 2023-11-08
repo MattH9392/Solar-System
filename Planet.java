@@ -7,7 +7,6 @@ public class Planet extends SolarObject {
     public Planet(SolarSystem solarSystem, Sun sun, double distance, double angle, double diameter, double orbitalPeriod, String colour) {
         super(solarSystem, distance, angle, diameter, orbitalPeriod, colour);
         numPlanets++;
-        System.out.println("Added planet. Total planets: " + numPlanets);
     }
 
 
